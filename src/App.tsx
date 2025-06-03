@@ -207,23 +207,27 @@ function App() {
                   {date}
                 </h2>
                 <ul className="space-y-4">
-                  {groupedByDate[date].map((action) => {
-                    const { icon, message } = renderAction(
-                      action.action,
-                      action.created_at
-                    );
-                    return (
-                      <li
-                        key={action.id}
-                        className="bg-white border-pink-100 border-[1px] p-4 rounded-md flex items-start gap-3"
-                      >
-                        <div className="mt-1">{icon}</div>
-                        <div className="text-gray-800">
-                          <p className="font-medium">{message}</p>
-                        </div>
-                      </li>
-                    );
-                  })}
+                  {groupedByDate[date]
+                    .sort((a, b) =>
+                      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+                    )
+                    .map((action) => {
+                      const { icon, message } = renderAction(
+                        action.action,
+                        action.created_at
+                      );
+                      return (
+                        <li
+                          key={action.id}
+                          className="bg-white border-pink-100 border-[1px] p-4 rounded-md flex items-start gap-3"
+                        >
+                          <div className="mt-1">{icon}</div>
+                          <div className="text-gray-800">
+                            <p className="font-medium">{message}</p>
+                          </div>
+                        </li>
+                      );
+                    })}
                 </ul>
               </div>
             ))}
